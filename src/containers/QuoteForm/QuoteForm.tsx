@@ -7,6 +7,7 @@ const QuoteForm = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [newQuote, setNewQuote] = useState({
+    id: '',
     category: '',
     author: '',
     description: '',
@@ -37,21 +38,16 @@ const QuoteForm = () => {
       }
   };
 
-
   const editQuote = useCallback(async () => {
     const url = 'quotes/' + params.quoteId + '.json';
-
     const response = await axiosApi.get(url);
     const data: Quote = response.data;
     setNewQuote(data);
   }, [params.quoteId]);
 
   useEffect(() => {
-    if(params.quoteId) {
       void editQuote();
-    }
-  }, [editQuote, params.quoteId]);
-
+  }, [editQuote]);
 
   const form = (
     <form onSubmit={onFormSubmit}>

@@ -27,7 +27,7 @@ function App() {
           <ul>
             <li><NavLink to="/quotes" >All</NavLink></li>
             {quotesDetails.map(quoteDetail => (
-              <li><NavLink to={"/quotes/" + quoteDetail.id} >{quoteDetail.title}</NavLink></li>
+              <li key={quoteDetail?.id}><NavLink to={"/quotes/" + quoteDetail.id} >{quoteDetail.title}</NavLink></li>
             ))}
           </ul>
         </div>

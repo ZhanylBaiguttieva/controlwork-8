@@ -6,7 +6,7 @@ import axiosApi from '../../axiosApi';
 const QuoteItem = () => {
   const [quoteInfo, setQuoteInfo] = useState<Quote[]>();
 
-  const params = useParams() as {quoteDetailId: string};
+  const params = useParams() as {quoteDetailId: string, quoteId: string};
 
   const fetchQuoteInfo = useCallback(async () => {
     const response = await axiosApi.get('quotes.json?orderBy="category"&equalTo="' + params.quoteDetailId + '"');
@@ -30,11 +30,13 @@ const QuoteItem = () => {
     <div>
       <div className="row">
         {quoteInfo?.map(quote => (
-          <div className="col-sm-12 rounded-start">
-            <div className="card-body mt-3  bg-warning" key={quote?.id}>
-              <div className="card-title"> {quote?.author}</div>
-              <div>{quote?.description}</div>
-              <Link to={'/quote/'+ quote.id + '/edit'}>Edit quote</Link>
+          <div className="col-sm-12 rounded-start bg-warning m-2 d-flex" key={quote?.id}>
+            <div className="card-body mt-3">
+              <div className="card-title"><strong>{quote?.author} said: </strong></div>
+              <div>"{quote?.description}"</div>
+            </div>
+            <div className="float-end m-3">
+              <Link to={'/quote/'+ quote.id + '/edit'}>Edit</Link>
             </div>
           </div>
         ))}
