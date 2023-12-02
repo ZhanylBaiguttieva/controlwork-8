@@ -26,6 +26,7 @@ const Quotes = () => {
     void fetchQuote();
   }, [fetchQuote]);
 
+
   return (
     <div>
       <h4 className="mb-1 fs-5">Quotes:</h4>
@@ -34,6 +35,8 @@ const Quotes = () => {
           <p className="mb-0"><strong>{quote.author} said:</strong></p>
           <p>" {quote.description} " </p>
           <Link to={'/quote/'+ quote.id + '/edit'}>Edit</Link>
+          <div>
+          </div>
         </div>
       ))}
     </div>

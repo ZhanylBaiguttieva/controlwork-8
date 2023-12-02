@@ -6,10 +6,11 @@ import axiosApi from '../../axiosApi';
 const QuoteItem = () => {
   const [quoteInfo, setQuoteInfo] = useState<Quote[]>();
 
-  const params = useParams() as {quoteDetailId: string, quoteId: string};
+  const params = useParams() as {quoteDetailId: string};
 
   const fetchQuoteInfo = useCallback(async () => {
-    const response = await axiosApi.get('quotes.json?orderBy="category"&equalTo="' + params.quoteDetailId + '"');
+    const url = 'quotes.json?orderBy="category"&equalTo="' + params.quoteDetailId + '"';
+    const response = await axiosApi.get(url);
     const data: Quote = response.data;
     const quoteItems = Object.entries(data).map(([quoteDetailId,quote]) => {
       return {
@@ -19,12 +20,15 @@ const QuoteItem = () => {
         description: quote.description,
       };
     });
+    console.log(quoteItems);
     setQuoteInfo(quoteItems);
   },[params.quoteDetailId]);
 
   useEffect(() => {
     void fetchQuoteInfo();
   }, [fetchQuoteInfo]);
+
+
 
   return (
     <div>

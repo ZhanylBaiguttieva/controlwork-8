@@ -27,7 +27,7 @@ function App() {
           <ul>
             <li><NavLink to="/quotes" >All</NavLink></li>
             {quotesDetails.map(quoteDetail => (
-              <li key={quoteDetail?.id}><NavLink to={"/quotes/" + quoteDetail.id} >{quoteDetail.title}</NavLink></li>
+              <li><NavLink to={"/quotes/" + quoteDetail.id} >{quoteDetail.title}</NavLink></li>
             ))}
           </ul>
         </div>
@@ -36,10 +36,10 @@ function App() {
             <Route path='/' element={(<Quotes />)}></Route>
             <Route path='/quotes' element={(<Quotes/>)}></Route>
             <Route path='/new-quote' element={(<QuoteForm/>)}></Route>
-            {quotesDetails.map(quoteDetail => (
-              <Route path="/quotes/:quoteDetailId" element={(<QuoteItem/>)}>{quoteDetail.title}</Route>
-            ))}
             <Route path='/quote/:quoteId/edit' element={(<QuoteForm/>)}></Route>
+            {quotesDetails.map(quoteDetail => (
+              <Route path={"/quotes/:quoteDetailId"}  element={(<QuoteItem/>)}>{quoteDetail.title}</Route>
+            ))}
           </Routes>
         </div>
       </div>

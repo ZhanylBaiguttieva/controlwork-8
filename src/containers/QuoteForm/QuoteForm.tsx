@@ -14,6 +14,7 @@ const QuoteForm = () => {
   });
 
   const params = useParams() as {quoteId: string};
+
   const quoteChanged = useCallback((event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const {name, value} = event.target;
     setNewQuote(prevState => ({
@@ -46,8 +47,10 @@ const QuoteForm = () => {
   }, [params.quoteId]);
 
   useEffect(() => {
+    if(params.quoteId) {
       void editQuote();
-  }, [editQuote]);
+    }
+  }, [params.quoteId,editQuote]);
 
   const form = (
     <form onSubmit={onFormSubmit}>
