@@ -4,8 +4,16 @@ import {NavLink, Route, Routes} from 'react-router-dom';
 
 import Quotes from './containers/Quotes/Quotes';
 import QuoteForm from './containers/QuoteForm/QuoteForm';
+import QuoteItem from './containers/Quotes/QuoteItem';
 
 function App() {
+  const quotesDetails = [
+    {title: 'Star Wars', id: 'star-wars'},
+    {title: 'Celebrities', id: 'celebrities'},
+    {title: 'Motivational', id: 'motivational'},
+    {title: 'Saying', id: 'saying'},
+    {title: 'Humour', id: 'humour'},
+  ];
 
   return (
     <div>
@@ -18,11 +26,9 @@ function App() {
         <div className="text-start">
           <ul>
             <li><NavLink to="/quotes" >All</NavLink></li>
-            <li><NavLink to="/quotes/star-wars" >Star wars</NavLink></li>
-            <li><NavLink to="/quotes/celebrities" >Famous people</NavLink></li>
-            <li><NavLink to="/quotes/motivational" >Motivational</NavLink></li>
-            <li><NavLink to="/quotes/saying" >Saying</NavLink></li>
-            <li><NavLink to="/quotes/humour" >Humour</NavLink></li>
+            {quotesDetails.map(quoteDetail => (
+              <li><NavLink to={"/quotes/" + quoteDetail.id} >{quoteDetail.title}</NavLink></li>
+            ))}
           </ul>
         </div>
         <div className="flex-fill ms-5">
@@ -30,6 +36,10 @@ function App() {
             <Route path='/' element={(<Quotes />)}></Route>
             <Route path='/quotes' element={(<Quotes/>)}></Route>
             <Route path='/new-quote' element={(<QuoteForm/>)}></Route>
+            {quotesDetails.map(quoteDetail => (
+              <Route path="/quotes/:quoteDetailId" element={(<QuoteItem/>)}>{quoteDetail.title}</Route>
+            ))}
+            <Route path='/quote/:quoteId/edit' element={(<QuoteForm/>)}></Route>
           </Routes>
         </div>
       </div>
