@@ -36,6 +36,7 @@ const Quotes = () => {
           <p>" {quote.description} " </p>
           <Link to={'/quote/'+ quote.id + '/edit'}>Edit</Link>
           <div>
+            <Link to={'/quote/' + quote.id}>X</Link>
           </div>
         </div>
       ))}

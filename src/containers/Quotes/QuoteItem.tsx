@@ -28,8 +28,6 @@ const QuoteItem = () => {
     void fetchQuoteInfo();
   }, [fetchQuoteInfo]);
 
-
-
   return (
     <div>
       <div className="row">
@@ -41,6 +39,9 @@ const QuoteItem = () => {
             </div>
             <div className="float-end m-3">
               <Link to={'/quote/'+ quote.id + '/edit'}>Edit</Link>
+              <div className="bg-warning">
+                <Link to={'/quote/'+ quote.id}>X</Link>
+              </div>
             </div>
           </div>
         ))}

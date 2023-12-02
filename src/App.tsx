@@ -5,6 +5,7 @@ import {NavLink, Route, Routes} from 'react-router-dom';
 import Quotes from './containers/Quotes/Quotes';
 import QuoteForm from './containers/QuoteForm/QuoteForm';
 import QuoteItem from './containers/Quotes/QuoteItem';
+import QuoteDelete from './containers/Quotes/QuoteDelete';
 
 function App() {
   const quotesDetails = [
@@ -37,6 +38,7 @@ function App() {
             <Route path='/quotes' element={(<Quotes/>)}></Route>
             <Route path='/new-quote' element={(<QuoteForm/>)}></Route>
             <Route path='/quote/:quoteId/edit' element={(<QuoteForm/>)}></Route>
+            <Route path='/quote/:quoteId' element={(<QuoteDelete/>)}></Route>
             {quotesDetails.map(quoteDetail => (
               <Route path={"/quotes/:quoteDetailId"}  element={(<QuoteItem/>)}>{quoteDetail.title}</Route>
             ))}
