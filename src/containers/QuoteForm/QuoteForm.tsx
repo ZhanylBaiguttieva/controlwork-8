@@ -1,21 +1,23 @@
-import {useNavigate} from 'react-router-dom';
-import {useCallback, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useCallback, useEffect, useState} from 'react';
 import axiosApi from '../../axiosApi';
+import {Quote} from '../../types';
 
 const QuoteForm = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const[newQuote, setNewQuote] = useState({
+  const [newQuote, setNewQuote] = useState({
     category: '',
     author: '',
     description: '',
   });
 
-  const quoteChanged = useCallback((event: React.ChangeEvent<HTMLInputElement> |  React.ChangeEvent<HTMLSelectElement>) => {
+  const params = useParams() as {quoteId: string};
+  const quoteChanged = useCallback((event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const {name, value} = event.target;
     setNewQuote(prevState => ({
       ...prevState,
-      [name]:value,
+      [name]: value,
     }));
   }, []);
 
@@ -23,13 +25,32 @@ const QuoteForm = () => {
     event.preventDefault();
     setLoading(true);
 
-    try {
-      await axiosApi.post('quotes.json', newQuote);
-      navigate('/');
-    } finally {
-      setLoading(false);
-    }
+      try {
+        if(params.quoteId === undefined) {
+          await axiosApi.post('quotes.json', newQuote);
+        } else {
+          await axiosApi.put('quotes/' + params.quoteId + '.json', newQuote);
+        }
+        navigate('/');
+      } finally {
+        setLoading(false);
+      }
   };
+
+
+  const editQuote = useCallback(async () => {
+    const url = 'quotes/' + params.quoteId + '.json';
+
+    const response = await axiosApi.get(url);
+    const data: Quote = response.data;
+    setNewQuote(data);
+  }, [params.quoteId]);
+
+  useEffect(() => {
+    if(params.quoteId) {
+      void editQuote();
+    }
+  }, [editQuote, params.quoteId]);
 
 
   const form = (
@@ -38,11 +59,11 @@ const QuoteForm = () => {
         <label htmlFor="Category" className="me-3">Category: </label>
         <select  className="form-control" id="category" value={newQuote.category} onChange={quoteChanged} name="category"  required >
           <option value=""> </option>
-          <option value="Star wars">Star wars</option>
-          <option value="Famous people">Famous people</option>
-          <option value="Motivational">Motivational</option>
-          <option value="Saying">Saying</option>
-          <option value="Humour">Humour</option>
+          <option value="star-wars">Star wars</option>
+          <option value="celebrities">Famous people</option>
+          <option value="motivational">Motivational</option>
+          <option value="saying">Saying</option>
+          <option value="humour">Humour</option>
         </select>
       </div>
       <div className="form-group mt-3">
@@ -68,7 +89,6 @@ const QuoteForm = () => {
       </button>
     </form>
   );
-
 
   return (
     <div>
