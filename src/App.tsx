@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import './App.css';
+import {NavLink, Route, Routes} from 'react-router-dom';
+
+import Quotes from './containers/Quotes/Quotes';
+import QuoteForm from './containers/QuoteForm/QuoteForm';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div>
+      <header>
+        <NavLink to="/quotes" >Quotes</NavLink>
+        <span style={{margin: '0 10px'}}>|</span>
+        <NavLink to="/new-quote" >Submit new quote</NavLink>
+      </header>
+      <div className="d-flex m-5">
+        <div className="text-start">
+          <ul>
+            <li><NavLink to="/quotes" >All</NavLink></li>
+            <li><NavLink to="/quotes/star-wars" >Star wars</NavLink></li>
+            <li><NavLink to="/quotes/celebrities" >Famous people</NavLink></li>
+            <li><NavLink to="/quotes/motivational" >Motivational</NavLink></li>
+            <li><NavLink to="/quotes/saying" >Saying</NavLink></li>
+            <li><NavLink to="/quotes/humour" >Humour</NavLink></li>
+          </ul>
+        </div>
+        <div className="flex-fill ms-5">
+          <Routes>
+            <Route path='/' element={(<Quotes />)}></Route>
+            <Route path='/quotes' element={(<Quotes/>)}></Route>
+            <Route path='/new-quote' element={(<QuoteForm/>)}></Route>
+          </Routes>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
